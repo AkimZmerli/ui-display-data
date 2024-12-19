@@ -1,7 +1,9 @@
 import { getData } from "../api/getdata";
 import { DataItem } from '../types/data';
 
+
 export default async function DisplayData() {
+  
     try {
       const data = await getData();
   
@@ -23,7 +25,7 @@ export default async function DisplayData() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item: DataItem, index: number) => (
+                  {data.slice(0, 13).map((item: DataItem, index: number) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-600'}>
                       <td className="border px-4 py-2">{item.date_start}</td>
                       <td className="border px-4 py-2">{item.campaign_id}</td>

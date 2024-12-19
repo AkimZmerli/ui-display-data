@@ -1,37 +1,21 @@
-# Use the official Bun image
-FROM oven/bun:1 as base
+# Step 1: Use the official Node.js image as the base image
+FROM node:22 AS base
 
-# Set the working directory
+# Set working directory in the container
 WORKDIR /app
 
-# Copy package.json and bun.lockb (if you have one)
-COPY package.json bun.lockb* ./
+# Step 2: Copy the package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install --production
 
-# Install dependencies
-RUN bun install --frozen-lockfile
-
-# Copy the rest of the application code
+# Step 3: Copy the rest of the application files
 COPY . .
 
-# Build the Next.js application
-RUN bun run build
+# Step 4: Build the Next.js application
+RUN npm run build
 
-# Start a new stage for a smaller final image
-FROM oven/bun:1
-
-WORKDIR /app
-
-# Copy built assets from the base stage
-COPY --from=base /app/.next ./.next
-COPY --from=base /app/public ./public
-COPY --from=base /app/package.json ./package.json
-COPY --from=base /app/bun.lockb ./bun.lockb
-
-# Install only production dependencies
-RUN bun install --production --frozen-lockfile
-
-# Expose the port the app runs on
+# Step 5: Expose the port that Next.js will run on
 EXPOSE 3000
 
-# Start the application
-CMD ["bun", "start"]
+# Step 6: Start the Next.js application in production mode
+CMD ["npm", "start"]

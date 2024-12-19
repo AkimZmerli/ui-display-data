@@ -20,6 +20,7 @@ export async function getData(): Promise<DataItem[]> {
     const transformedData: DataItem[] = jsonData.data.map(row => {
       const item: Partial<DataItem> = {};
       jsonData.columns.forEach((column, index) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         item[column as keyof DataItem] = row[index] as any;
       });
       return item as DataItem;
@@ -31,5 +32,4 @@ export async function getData(): Promise<DataItem[]> {
     throw new Error(`Failed to fetch data: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
-
 

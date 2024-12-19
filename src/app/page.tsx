@@ -9,7 +9,7 @@ export default function Home() {
   <br className="mb-2" />
   Data Warehouse
 </h1>
-      <div className="fixed top-0 left-0 w-64 h-screen bg-zinc-600 p-4 ">
+      <div className="fixed top-0 left-0 w-64 h-screen bg-zinc-800 p-4 ">
       <div className="h-1/3"></div>  
   <ul >
     <li className="mb-4">
